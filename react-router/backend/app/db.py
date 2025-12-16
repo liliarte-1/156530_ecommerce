@@ -1,12 +1,16 @@
 from sqlmodel import Session, SQLModel, create_engine
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent
 sqlite_file_path = BASE_DIR / "database.db"
 sqlite_url = f"sqlite:///{sqlite_file_path}"
 
-connect_args = {"check_same_thread": False}
-engine = create_engine(sqlite_url, connect_args=connect_args)
+database_url = os.environ.get("DATABASE_URL")
+# database_url = "postgresql://postgres.pngzytvvzjcvxzmeoaih:estanoesbroki"34@aws-1-eu-central-1.pooler.supabase.com:5432/postgres"
+
+connect_args = {"check_same_thread": False} 
+engine = create_engine(database_url, connect_args=connect_args)
 
 
 def create_db_and_tables():
