@@ -19,7 +19,7 @@ app = FastAPI(lifespan=lifespan)
 # Configure CORS policy.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://156530-ecommerce.vercel.app/"],
+    allow_origins=["http://localhost:5173", "https://156530-ecommerce.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
