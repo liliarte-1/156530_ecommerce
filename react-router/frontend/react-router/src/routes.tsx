@@ -1,11 +1,10 @@
 import Layout from "./components/Layout";
-import Home from "./pages/Home";
-import HeroDetail from "./pages/HeroDetail";
-import CreateHero from "./pages/CreateHero";
-import DeleteHero from "./pages/DeleteHero";
-import DisplayProducts from "./pages/DisplayProduct";
+import DisplayProducts from "./pages/DisplayProducts1";
 import ProductDetail from "./pages/ProductDetail";
-import CreateUser from "./pages/CreateUser";
+import CreateUser from "./pages/CreateUsers1";
+import LoginUser from "./pages/LoginUsers1";
+import Checkout from "./pages/Checkout";
+import { Navigate } from "react-router-dom";
 
 /**
  * Route configuration for React Router.
@@ -19,46 +18,41 @@ import CreateUser from "./pages/CreateUser";
  */
 export const routes = [
   {
-    // Root route - Layout wraps all pages
     path: "/",
     element: <Layout />,
-    // Child routes are rendered inside Layout's <Outlet /> component
     children: [
+        
+      //Default redirect
       {
-        // index: true means this is the default route for "/"
-        index: true,
-        element: <Home />,
+      index: true,
+      element: <Navigate to="/products" replace />,
       },
-      {
-        // Dynamic route parameter :heroId - accessible via useParams()
-        // Example: /heroes/123 -> heroId = "123"
-        path: "heroes/:heroId",
-        element: <HeroDetail />,
-      },
-      {
-        path: "create",
-        element: <CreateHero />,
-      },
-      {
-        path: "delete",
-        element: <DeleteHero />,
-      },
-      {
-        path: "products/:productId",
-        element: <ProductDetail />,
-      },
+      
+      // Products
       {
         path: "products",
         element: <DisplayProducts />,
       },
       {
+        path: "products/:productId",
+        element: <ProductDetail />,
+      },
+
+      // Checkout
+      {
+        path: "checkout",
+        element: <Checkout />,
+      },
+
+      // Auth
+      {
         path: "auth/register",
         element: <CreateUser />,
       },
-      // {
-      //   path: "auth/login",
-      //   element: <CreateUser />,
-      // },
+      {
+        path: "auth/login",
+        element: <LoginUser />,
+      },
     ],
   },
 ];

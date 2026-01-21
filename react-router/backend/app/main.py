@@ -4,9 +4,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .db import create_db_and_tables
-from .routes import health, hero
-from .routes import products 
-from .routes import user
+from .routes import health
+from .routes import products1
+from .routes import users1
+from .routes import orders, orderItems
 
 
 @asynccontextmanager
@@ -27,6 +28,7 @@ app.add_middleware(
 
 # Register API routers.
 app.include_router(health.router)
-app.include_router(hero.router)
-app.include_router(products.router)
-app.include_router(user.router)
+app.include_router(products1.router)
+app.include_router(orders.router)
+app.include_router(orderItems.router)
+app.include_router(users1.router)

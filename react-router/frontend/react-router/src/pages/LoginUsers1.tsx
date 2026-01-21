@@ -1,20 +1,14 @@
 import { useState } from "react";
-/**
- * useNavigate: Hook for programmatic navigation.
- * - Returns a function to navigate to different routes
- * - Useful after form submissions, button clicks, etc.
- * - Unlike <Link>, this is used in event handlers, not JSX
- */
 import { useNavigate } from "react-router";
-import { createUser } from "../api/user";
-import "./CreateUser.css";
+import { oauthLogin } from "../api/users1";
+import { saveToken } from "../api/users1";
+import { logout } from "../api/users1";
+import "./LoginUsers1.css";
 
-export default function CreateUser() {
-  // Get the navigate function to redirect user after actions
+export default function LoginUser() {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password_hash, setPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,14 +18,11 @@ export default function CreateUser() {
     setError(null);
 
     try {
-      await createUser({
-        name,
-        email,
-        password_hash,
-      });
+      const token = await oauthLogin(email, password);
 
-      // Programmatic navigation: redirect to home after successful creation
-      // This is equivalent to clicking a <Link to="/">
+      saveToken(token.access_token);
+      setEmail("");
+      setPassword("");
       navigate("/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -40,21 +31,16 @@ export default function CreateUser() {
     }
   }
 
+  async function handleLogout() {
+  logout();
+  navigate("/products");
+  }
+
+
   return (
-    <div className="create-user">
-      <h1>Create new user</h1>
-      <form onSubmit={handleSubmit} className="create-form">
-        <div className="form-group">
-          <label htmlFor="name">User name</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter user name"
-            required
-          />
-        </div>
+    <div className="login-user">
+      <h1>Login User</h1>
+      <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
@@ -64,30 +50,49 @@ export default function CreateUser() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter email"
             required
+            autoComplete="email"
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
-            value={password_hash}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter password"
             required
+            autoComplete="current-password"
           />
         </div>
+
         {error && <p className="error">{error}</p>}
+
         <div className="form-actions">
           <button type="submit" disabled={loading} className="submit-btn">
-            {loading ? "Creating..." : "Create User"}
+            {loading ? "Logging in..." : "Login"}
           </button>
-          {/* navigate() can also be called in onClick handlers */}
-          <button type="button" onClick={() => navigate("/")} className="cancel-btn">
+
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            className="cancel-btn"
+            disabled={loading}
+          >
             Cancel
           </button>
         </div>
       </form>
+    <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
+      <button
+        type="button"
+        onClick={handleLogout}
+        className="cancel-btn">
+        Logout
+      </button>
+    </div>
+
     </div>
   );
 }

@@ -6,15 +6,15 @@ import { useState } from "react";
  * - Unlike <Link>, this is used in event handlers, not JSX
  */
 import { useNavigate } from "react-router";
-import { createHero } from "../api/heroes";
-import "./CreateHero.css";
+import { createUser } from "../api/users1";
+import "./CreateUsers1.css";
 
-export default function CreateHero() {
+export default function CreateUser() {
   // Get the navigate function to redirect user after actions
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [secretName, setSecretName] = useState("");
-  const [age, setAge] = useState("");
+  const [username, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,13 +24,13 @@ export default function CreateHero() {
     setError(null);
 
     try {
-      await createHero({
-        name,
-        secret_name: secretName,
-        age: age ? parseInt(age) : null,
+      await createUser({
+        username,
+        email,
+        password,
       });
 
-      // Programmatic navigation: redirect to home after successful creation
+      // redirect to home after successful creation
       // This is equivalent to clicking a <Link to="/">
       navigate("/");
     } catch (err) {
@@ -41,46 +41,46 @@ export default function CreateHero() {
   }
 
   return (
-    <div className="create-hero">
-      <h1>Create new hero</h1>
+    <div className="create-user">
+      <h1>Create new user</h1>
       <form onSubmit={handleSubmit} className="create-form">
         <div className="form-group">
-          <label htmlFor="name">Hero name</label>
+          <label htmlFor="name">User name</label>
           <input
             type="text"
             id="name"
-            value={name}
+            value={username}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Enter hero name"
+            placeholder="Enter username"
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="secretName">Secret name</label>
+          <label htmlFor="email">Email</label>
           <input
             type="text"
-            id="secretName"
-            value={secretName}
-            onChange={(e) => setSecretName(e.target.value)}
-            placeholder="Enter secret identity"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter email"
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="age">Age</label>
+          <label htmlFor="password">Password</label>
           <input
-            type="number"
-            id="age"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            placeholder="Enter hero age"
-            min="0"
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password"
+            required
           />
         </div>
         {error && <p className="error">{error}</p>}
         <div className="form-actions">
           <button type="submit" disabled={loading} className="submit-btn">
-            {loading ? "Creating..." : "Create Hero"}
+            {loading ? "Creating..." : "Create User"}
           </button>
           {/* navigate() can also be called in onClick handlers */}
           <button type="button" onClick={() => navigate("/")} className="cancel-btn">

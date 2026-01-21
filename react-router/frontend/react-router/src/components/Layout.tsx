@@ -19,27 +19,23 @@ export default function Layout() {
             NavLink automatically adds "active" state when the URL matches.
             The `end` prop ensures "/" only matches exactly "/" and not "/create" etc.
           */}
-          <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} end>
-            Home
-          </NavLink>
-          <NavLink to="/create" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
-            Create
-          </NavLink>
-          <NavLink to="/delete" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
-            Delete
-          </NavLink>
           <NavLink to="/products" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
             Products
           </NavLink>
           <NavLink to="/auth/register" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
             Register
           </NavLink>
+          <NavLink to="/auth/login" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+            Login
+          </NavLink>
+          <NavLink to="/checkout" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+            checkout
+          </NavLink>
         </nav>
       </header>
       <main className="main">
         {/* 
           <Outlet /> renders the matching child route component.
-          This is where Home, CreateHero, DeleteHero, or HeroDetail will appear.
         */}
         <Outlet />
       </main>
