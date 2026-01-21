@@ -2,6 +2,15 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os
+from dotenv import load_dotenv
+
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).resolve().parents[1]   # backend/
+load_dotenv(ROOT_DIR / ".env")
+
+print("DATABASE_URL:", os.getenv("DATABASE_URL"))
 
 from .db import create_db_and_tables
 from .routes import health
@@ -32,3 +41,5 @@ app.include_router(products1.router)
 app.include_router(orders.router)
 app.include_router(orderItems.router)
 app.include_router(users1.router)
+
+
