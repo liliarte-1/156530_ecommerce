@@ -1,5 +1,5 @@
 import type { UserRead, UserAuth} from "../models/users1";
-const API_BASE_URL = "http://localhost:8000";
+import { API_BASE_URL } from "./config";
 
 type Token = { access_token: string; token_type: string };
 

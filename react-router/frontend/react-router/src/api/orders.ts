@@ -1,6 +1,7 @@
 import type { OrderCreate, OrderRead } from "../models/orders";
 
-const API_BASE_URL = "http://localhost:8000";
+import { API_BASE_URL } from "./config";
+
 
 function authHeaders(): HeadersInit {
   const token = localStorage.getItem("access_token");

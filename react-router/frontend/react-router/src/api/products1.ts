@@ -1,6 +1,6 @@
 import type { ProductPublic, ProductRead, ProductUpdate } from "../models/products1";
 
-const API_BASE_URL = "http://localhost:8000";
+import { API_BASE_URL } from "./config";
 
 async function parseError(response: Response): Promise<string> {
   try {
