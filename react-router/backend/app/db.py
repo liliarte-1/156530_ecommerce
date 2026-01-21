@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent
 
 database_url = os.environ.get("DATABASE_URL")
 
-# database_url = "postgresql://postgres.pngzytvvzjcvxzmeoaih:estanoesbroki"34@aws-1-eu-central-1.pooler.supabase.com:5432/postgres"
+# database_url = postgresql://postgres.pngzytvvzjcvxzmeoaih:[YOUR-PASSWORD]@aws-1-eu-central-1.pooler.supabase.com:6543/postgres
 if database_url:
 # engine = create_engine(database_url, connect_args=connect_args)
     engine = create_engine(database_url, echo=True)
